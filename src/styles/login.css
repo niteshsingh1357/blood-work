@@ -1,0 +1,48 @@
+.jumbotron {
+  background: #ffebee;
+}
+
+.login {
+  background: #d50000;
+  border-width: 0;
+}
+
+.login:hover {
+  background: white;
+  border-width: 1;
+  border-color: #d50000;
+  color: #d50000;
+  display: block;
+}
+
+.login-google {
+  background: #fff;
+  border-width: 0;
+  border-color: black;
+  color: #000;
+}
+
+.login-google:hover {
+  background: #fff;
+  border-width: 1;
+  border-color: black;
+  color: #000;
+  box-shadow: 2rem;
+}
+
+.formRow {
+  justify-content: center;
+}
+
+.text {
+  align-items: center;
+  justify-content: center;
+}
+
+.signUp {
+  /* background-color: aqua; */
+}
+
+Row {
+  background: aqua;
+}
