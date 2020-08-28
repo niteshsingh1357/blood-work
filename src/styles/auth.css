@@ -12,7 +12,6 @@
   border-width: 1;
   border-color: #d50000;
   color: #d50000;
-  display: block;
 }
 
 .login-google {
@@ -27,7 +26,6 @@
   border-width: 1;
   border-color: black;
   color: #000;
-  box-shadow: 2rem;
 }
 
 .formRow {
@@ -39,8 +37,13 @@
   justify-content: center;
 }
 
-.signUp {
-  /* background-color: aqua; */
+.link-text {
+  color: #4caf50;
+}
+
+.link-text:hover {
+  text-decoration-line: none;
+  color: #4caf50;
 }
 
 Row {

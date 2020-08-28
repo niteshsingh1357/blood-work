@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Link } from 'react-router-dom';
-import { Container, Row, Col, Button, Form, Jumbotron } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import { Row, Col, Button, Form, Jumbotron } from 'react-bootstrap';
+import { signInWithGoogle } from '../firebase';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -20,6 +21,7 @@ const Login = () => {
     }
   };
   return (
+    // <Router>
     <Jumbotron className='col-md-6 offset-md-3 mt-5 col-xs-9 jumbotron'>
       <Row className='justify-content-md-center'>
         <Col>
@@ -58,34 +60,41 @@ const Login = () => {
               />
             </Form.Group>
             <br />
-            <Button variant='primary' type='submit' className='col-md-12 login'>
+            <Button
+              variant='primary'
+              type='submit'
+              className='col-md-12 login'
+              onClick={(event) =>
+                signInWithEmailAndPasswordHandler(event, email, password)
+              }
+            >
               Login
             </Button>
             <div className='text-center py-2'>or</div>
             <Button
               variant='primary'
-              type='submit'
               className='col-md-12 login-google'
+              onClick={signInWithGoogle}
             >
               Login with Google
             </Button>
             <br />
             <br />
-            <Router>
-              <div className='text-center'>
-                Don't have an account?
-                <Link> Sign Up</Link>
-              </div>
-              <div className='text-center'>
-                <Link>
-                  Forgot Password?
-                </Link>
-              </div>
-            </Router>
+            <div className='text-center'>
+              Don't have an account?
+              <Link to='signUp' className='link-text'>
+                {' '}
+                Sign Up
+              </Link>
+            </div>
+            <div className='text-center link-text'>
+              <Link className='link-text'>Forgot Password?</Link>
+            </div>
           </Form>
         </Col>
       </Row>
     </Jumbotron>
+    // {/* </Router> */}
   );
 };
 export default Login;
