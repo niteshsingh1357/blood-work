@@ -8,7 +8,7 @@ import { Switch, Route } from 'react-router-dom';
 import { firebaseAuth } from './provider/AuthProvider';
 
 const App = () => {
-  const { token, setToken } = useContext(firebaseAuth);
+  const { token } = useContext(firebaseAuth);
   console.log('token', token);
 
 
@@ -17,7 +17,7 @@ const App = () => {
       <Route
         exact
         path='/'
-        render={(rProps) => (token === null ? <SignIn /> : <Home />)}
+        render={(props) => (token === null ? <SignIn /> : <Home />)}
       />
       <Route exact path='/signIn' component={SignIn} />
       <Route exact path='/signUp' component={SignUp} />

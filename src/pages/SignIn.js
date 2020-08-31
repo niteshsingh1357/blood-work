@@ -11,6 +11,8 @@ const SignIn = () => {
     inputs,
     setInputs,
     error,
+    handleAnonymousSignIn,
+    handleSignInWithFacebook,
   } = useContext(firebaseAuth);
 
   const handleSubmit = async (event) => {
@@ -36,9 +38,7 @@ const SignIn = () => {
       <Row className='justify-content-md-center formRow'>
         <Col xs='10' lg='10' md='12' sm='10'>
           {error !== null && (
-            <div className='py-1 text-center mb-2 error'>
-              {error}
-            </div>
+            <div className='py-1 text-center mb-2 error'>{error}</div>
           )}
           <Form>
             <Form.Group>
@@ -88,6 +88,27 @@ const SignIn = () => {
             </Button>
             <br />
             <br />
+            <Button
+              variant='light'
+              className='col-md-12 login-google'
+              onClick={handleSignInWithFacebook}
+              bsPrefix='btn'
+            >
+              Sign In with Facebook
+            </Button>
+            <br />
+            <br />
+            <Button
+              variant='light'
+              className='col-md-12 login-google'
+              onClick={handleAnonymousSignIn}
+              bsPrefix='btn'
+            >
+              Anonymous Sign In
+            </Button>
+            <br />
+            <br />
+
             <div className='text-center'>
               Don't have an account?
               <Link to='signUp' className='link-text'>

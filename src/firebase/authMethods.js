@@ -4,27 +4,10 @@ import firebaseConfig from './firebaseIndex';
 
 const auth = firebase.auth();
 
-const provider = new firebase.auth.GoogleAuthProvider();
+const google_provider = new firebase.auth.GoogleAuthProvider();
+const facebook_provider = new firebase.auth.FacebookAuthProvider();
 
-// sign in with Google method
-export const signInWithGoogle = (setError, setToken) => {
-  auth
-    .signInWithPopup(provider)
-    .then(async (result) => {
-      const token = await result.credential.accessToken;
-
-      localStorage.setItem('token', token);
-      setToken(token);
-      console.log(result.user);
-      console.log('token',token);
-      setError(null);
-    })
-    .catch((err) => {
-      console.log(err);
-      setError(err.message);
-    });
-};
-
+// sign in with email and password
 export const signInWithEmailPasswordMethods = {
   // firebase helper methods...
   signUp: (email, password, setError, setToken) => {
@@ -77,4 +60,59 @@ export const signInWithEmailPasswordMethods = {
         setToken(null);
       });
   },
+};
+
+// sign in with Google method
+export const signInWithGoogle = (setError, setToken) => {
+  auth
+    .signInWithPopup(google_provider)
+    .then(async (result) => {
+      const token = await result.credential.accessToken;
+
+      localStorage.setItem('token', token);
+      setToken(token);
+      console.log(result.user);
+      console.log('token', token);
+      setError(null);
+    })
+    .catch((err) => {
+      console.log(err);
+      setError(err.message);
+    });
+};
+
+// sign in with Google method
+export const signInWithFacebook = (setError, setToken) => {
+  auth
+    .signInWithPopup(facebook_provider)
+    .then(async (result) => {
+      const token = await result.credential.accessToken;
+
+      localStorage.setItem('token', token);
+      setToken(token);
+      console.log(result.user);
+      console.log('token', token);
+      setError(null);
+    })
+    .catch((err) => {
+      console.log(err);
+      setError(err.message);
+    });
+};
+
+// anonymous sign in
+export const anonymousSignIn = (setError, setToken) => {
+  auth
+    .signInAnonymously()
+    .then((result) => {
+      const token = result.user.refreshToken;
+      console.log(token);
+      setToken(token);
+      localStorage.setItem('token', token);
+      setError(null)
+    })
+    .catch((err) => {
+      console.log(err);
+      setError(err);
+    });
 };

@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import {
   signInWithEmailPasswordMethods,
   signInWithGoogle,
+  anonymousSignIn,
+  signInWithFacebook,
 } from '../firebase/authMethods';
 
 export const firebaseAuth = React.createContext();
@@ -19,7 +21,7 @@ const AuthProvider = (props) => {
     } else {
       setToken(null);
     }
-  },[]);
+  }, []);
 
   const handleSignUp = () => {
     console.log('handleSignUp');
@@ -53,6 +55,18 @@ const AuthProvider = (props) => {
     console.log(error, token);
   };
 
+  const handleSignInWithFacebook = () => {
+    console.log('handleSignInWithFacebook');
+    signInWithFacebook(setError, setToken);
+    console.log(error, token);
+  };
+
+  const handleAnonymousSignIn = () => {
+    console.log('handleAnonymousSignIn');
+    anonymousSignIn(setError, setToken);
+    console.log(error, token);
+  };
+
   const handleSignOut = () => {
     signInWithEmailPasswordMethods.signOut(setError, setToken);
   };
@@ -69,6 +83,8 @@ const AuthProvider = (props) => {
         error,
         handleSignOut,
         setToken,
+        handleAnonymousSignIn,
+        handleSignInWithFacebook
       }}
     >
       {props.children}
