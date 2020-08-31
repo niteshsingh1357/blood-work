@@ -1,32 +1,28 @@
-import React, { useState } from 'react';
-import { BrowserRouter as Router, Link } from 'react-router-dom';
-import { Container, Row, Col, Button, Form, Jumbotron } from 'react-bootstrap';
+import React, { useContext } from 'react';
+import { firebaseAuth } from '../provider/AuthProvider';
+import { Link, withRouter } from 'react-router-dom';
+import { Row, Col, Button, Form, Jumbotron } from 'react-bootstrap';
 
-const SignUp = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  // const [displayName, setDisplayName] = useState('');
-  const [error, setError] = useState(null);
-  const createUserWithEmailAndPasswordHandler = (event, email, password) => {
+const SignUp = (props) => {
+  const { handleSignUp, inputs, setInputs, error } = useContext(firebaseAuth);
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    setEmail('');
-    setPassword('');
-    // setDisplayName('');
+    console.log('handleSubmit');
+    // wait to signUp
+    await handleSignUp();
+    // push home
+    props.history.push('/');
   };
+
   const onChangeHandler = (event) => {
-    const { name, value } = event.currentTarget;
-    if (name === 'userEmail') {
-      setEmail(value);
-    } else if (name === 'userPassword') {
-      setPassword(value);
-    }
-    // else if (name === 'displayName') {
-    //   setDisplayName(value);
-    // }
+    const { name, value } = event.target;
+    // console.log(inputs);
+    setInputs((prev) => ({ ...prev, [name]: value }));
   };
+
   return (
-    // <Router>
-    <Jumbotron className='col-md-6 offset-md-3 mt-5 col-xs-9 jumbotron'>
+    <Jumbotron className='col-md-6 col-lg-4 col-sm-8 col-xs-10 jumbotron'>
       <Row className='justify-content-md-center'>
         <Col>
           <h1 className='text-center'>SIGN UP</h1>
@@ -34,30 +30,30 @@ const SignUp = () => {
       </Row>
       <Row className='justify-content-md-center formRow'>
         <Col xs='10' lg='10' md='12' sm='10'>
-          {error !== null && (
-            <div className='py-4 bg-red-600 w-full text-white text-center mb-3'>
+        {error !== null && (
+            <div className='py-1 text-center mb-1 error'>
               {error}
             </div>
           )}
           <Form>
-            <Form.Group controlId='formBasicEmail'>
+            <Form.Group>
               <Form.Label>Email:</Form.Label>
               <Form.Control
                 type='email'
                 placeholder='Enter email'
-                value={email}
+                value={inputs.email}
                 id='userEmail'
                 name='userEmail'
                 onChange={(event) => onChangeHandler(event)}
               />
             </Form.Group>
 
-            <Form.Group controlId='formBasicPassword'>
+            <Form.Group>
               <Form.Label>Password:</Form.Label>
               <Form.Control
                 type='password'
                 placeholder='Enter password'
-                value={password}
+                value={inputs.password}
                 id='userPassword'
                 name='userPassword'
                 onChange={(event) => onChangeHandler(event)}
@@ -65,11 +61,11 @@ const SignUp = () => {
             </Form.Group>
             <br />
             <Button
-              variant='primary'
+              variant='danger'
               type='submit'
               className='col-md-12 login'
               onClick={(event) => {
-                createUserWithEmailAndPasswordHandler(event, email, password);
+                handleSubmit(event);
               }}
             >
               Sign Up
@@ -87,7 +83,6 @@ const SignUp = () => {
         </Col>
       </Row>
     </Jumbotron>
-    // {/* </Router> */}
   );
 };
-export default SignUp;
+export default withRouter(SignUp);
