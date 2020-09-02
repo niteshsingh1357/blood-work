@@ -1,24 +1,31 @@
-import React, { useContext } from 'react';
-import { firebaseAuth } from '../provider/AuthProvider';
-import { Link, withRouter } from 'react-router-dom';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Row, Col, Button, Form, Jumbotron } from 'react-bootstrap';
+import { handleSignUp } from '../redux/actions/auth';
+import Spinner from '../components/Spinner';
+import { connect } from 'react-redux';
 
-const SignUp = (props) => {
-  const { handleSignUp, inputs, setInputs, error } = useContext(firebaseAuth);
+const SignUp = ({ isLoaded, token, error, apiCallInProgress, dispatch }) => {
+  console.log('props', token, error, apiCallInProgress);
+  const [credentials, setCredentials] = useState({ email: '', password: '' });
 
   const handleSubmit = async (event) => {
+    // const { dispatch } = props;
     event.preventDefault();
     console.log('handleSubmit');
     // wait to signUp
-    await handleSignUp();
+    await dispatch(handleSignUp(credentials.email, credentials.password));
     // push home
-    props.history.push('/');
+    // history.push('/');
+    if (apiCallInProgress === 0) setCredentials({ email: '', password: '' });
   };
 
-  const onChangeHandler = (event) => {
-    const { name, value } = event.target;
-    // console.log(inputs);
-    setInputs((prev) => ({ ...prev, [name]: value }));
+  const onChangeHandler = (e) => {
+    e.persist();
+    setCredentials((credentials) => ({
+      ...credentials,
+      [e.target.name]: e.target.value,
+    }));
   };
 
   return (
@@ -30,10 +37,8 @@ const SignUp = (props) => {
       </Row>
       <Row className='justify-content-md-center formRow'>
         <Col xs='10' lg='10' md='12' sm='10'>
-        {error !== null && (
-            <div className='py-1 text-center mb-1 error'>
-              {error}
-            </div>
+          {error !== null && (
+            <div className='py-1 text-center mb-1 error'>{error}</div>
           )}
           <Form>
             <Form.Group>
@@ -41,9 +46,9 @@ const SignUp = (props) => {
               <Form.Control
                 type='email'
                 placeholder='Enter email'
-                value={inputs.email}
+                value={credentials.email}
                 id='userEmail'
-                name='userEmail'
+                name='email'
                 onChange={(event) => onChangeHandler(event)}
               />
             </Form.Group>
@@ -53,9 +58,9 @@ const SignUp = (props) => {
               <Form.Control
                 type='password'
                 placeholder='Enter password'
-                value={inputs.password}
+                value={credentials.password}
                 id='userPassword'
-                name='userPassword'
+                name='password'
                 onChange={(event) => onChangeHandler(event)}
               />
             </Form.Group>
@@ -64,11 +69,9 @@ const SignUp = (props) => {
               variant='danger'
               type='submit'
               className='col-md-12 login'
-              onClick={(event) => {
-                handleSubmit(event);
-              }}
+              onClick={handleSubmit}
             >
-              Sign Up
+              {apiCallInProgress === 1 ? <Spinner /> : <span>Sign Up</span>}
             </Button>
             <br />
             <br />
@@ -85,4 +88,12 @@ const SignUp = (props) => {
     </Jumbotron>
   );
 };
-export default withRouter(SignUp);
+
+const mapStateToProps = (state) => {
+  const { token, error } = state.authReducer.signUp;
+  const { apiCallInProgress } = state.authReducer.apiCallStatus;
+  const { isLoaded } = state.firebaseReducer.auth;
+  return { token, error, apiCallInProgress, isLoaded };
+};
+
+export default connect(mapStateToProps)(SignUp);
