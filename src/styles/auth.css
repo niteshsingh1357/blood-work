@@ -1,9 +1,14 @@
 .jumbotron {
   background: #ffebee;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  margin-top: 30px;
+}
+
+.error {
+  border-color: #d50000;
+}
+
+.input-feedback {
+  color: #d50000;
 }
 
 .login {
