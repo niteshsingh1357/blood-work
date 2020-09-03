@@ -11,6 +11,16 @@ import {
   handleAnonymousSignIn,
 } from '../redux/actions/auth';
 
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUserSecret } from '@fortawesome/free-solid-svg-icons';
+import { fab } from '@fortawesome/free-brands-svg-icons';
+
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Tooltip from 'react-bootstrap/Tooltip';
+
+library.add(fab, faUserSecret);
+
 const SignIn = ({ isLoaded, token, error, apiCallInProgress, dispatch }) => {
   // const [credentials, setCredentials] = useState({ email: '', password: '' });
 
@@ -21,7 +31,8 @@ const SignIn = ({ isLoaded, token, error, apiCallInProgress, dispatch }) => {
 
   return (
     <Container>
-      <Jumbotron className='col-md-6 col-lg-6 col-sm-8 col-xs-10 offset-4 mx-auto jumbotron'>
+      {/* <div id='progressBarContainer'></div> */}
+      <Jumbotron className='col-md-8 col-lg-6 col-sm-8 col-xs-10 offset-4 mx-auto jumbotron'>
         <Row className='justify-content-md-center'>
           <Col>
             <h2 className='text-center'>Sign In</h2>
@@ -58,45 +69,51 @@ const SignIn = ({ isLoaded, token, error, apiCallInProgress, dispatch }) => {
             <b>Sign In with</b>
           </div>
           <Row className='social justify-content-center text-center'>
-            <Col className='col-md-4 col-lg-4 col-4'>
-              <Row
-                className='text-center login-social btn btn-light col-md-12 col-lg-12 col-sm-12'
+            <OverlayTrigger
+              placement='top'
+              overlay={<Tooltip>Google</Tooltip>}
+            >
+              <Col
+                background='red'
+                className='col-md-3 col-lg-3 col-sm-10 mx-1 my-1 text-center login-social btn btn-light google'
                 onClick={() => dispatch(handleSignInWithGoogle())}
               >
-                <Col>
-                  <img
-                    src='https://upload.wikimedia.org/wikipedia/commons/5/53/Google_%22G%22_Logo.svg'
-                    alt='logo'
-                  />
-                </Col>
-                {/* Google */}
-              </Row>
-            </Col>
-            <Col className='col-md-4'>
-              <Row
-                className='text-center login-social btn btn-light col-md-12'
+                <FontAwesomeIcon
+                  size='lg'
+                  color='white'
+                  icon={['fab', 'google']}
+                />
+              </Col>
+            </OverlayTrigger>
+
+            <OverlayTrigger
+              placement='top'
+              overlay={<Tooltip>Facebook</Tooltip>}
+            >
+              <Col
+                className='col-md-3 col-lg-3 col-sm-10 mx-1 my-1 text-center login-social btn btn-light facebook'
                 onClick={() => dispatch(handleSignInWithFacebook())}
               >
-                <Col>
-                  <img
-                    src='https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.iconfinder.com%2Ficons%2F317727%2Ffacebook_social_social_media_icon&psig=AOvVaw0wlzJOu7oe3f-Q0wQrAEfU&ust=1599136137830000&source=images&cd=vfe&ved=0CAIQjRxqFwoTCIj72cC8yusCFQAAAAAdAAAAABAD'
-                    alt='fb'
-                  />
-                </Col>
-                {/* Facebook */}
-              </Row>
-            </Col>
-            <Col className='col-md-4'>
-              <Row
-                className='text-center login-social btn btn-light col-md-12'
+                <FontAwesomeIcon
+                  color='white'
+                  size='lg'
+                  icon={['fab', 'facebook-f']}
+                />
+                {/* <FontAwesomeIcon icon='fa-facebook-square' /> */}
+              </Col>
+            </OverlayTrigger>
+
+            <OverlayTrigger
+              placement='top'
+              overlay={<Tooltip>Anonymous</Tooltip>}
+            >
+              <Col
+                className='col-md-3 col-lg-3 col-sm-10 my-1 mx-1 text-center login-social btn btn-light anonymous'
                 onClick={() => dispatch(handleAnonymousSignIn())}
               >
-                <Col>
-                  {/* <img src='' alt='a' /> */}
-                  Anonymous
-                </Col>
-              </Row>
-            </Col>
+                <FontAwesomeIcon color='white' size='lg' icon='user-secret' />
+              </Col>
+            </OverlayTrigger>
           </Row>
         </div>
       </Jumbotron>

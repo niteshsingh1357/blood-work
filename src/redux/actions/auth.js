@@ -15,6 +15,7 @@ import firebase from '../../firebase/firebaseIndex';
 const auth = firebase.auth();
 const google_provider = new firebase.auth.GoogleAuthProvider();
 const facebook_provider = new firebase.auth.FacebookAuthProvider();
+facebook_provider.addScope('email');
 
 export const beginApiCall = () => {
   return {
@@ -94,7 +95,6 @@ export const handleSignIn = (email, password) => async (dispatch) => {
     .then(async (res) => {
       const token = await Object.entries(res.user)[5][1].b.g;
       dispatch(signInSuccess(token));
-      
     })
     .catch((error) => {
       dispatch(endApiCall());
@@ -138,16 +138,31 @@ export const handleSignInWithGoogle = () => async (dispatch) => {
 
 // sign in with Facebook method
 export const handleSignInWithFacebook = () => async (dispatch) => {
-  auth
-    .signInWithPopup(facebook_provider)
-    .then(async (result) => {
-      const token = await result.credential.accessToken;
-      dispatch(signInSuccess(token));
-    })
-    .catch((error) => {
-      dispatch(endApiCall());
-      dispatch(signInError(error.message));
-    });
+  try {
+    dispatch(beginApiCall());
+    auth
+      .signInWithPopup(facebook_provider)
+      .then(async (result) => {
+        const token = await result.credential.accessToken;
+        dispatch(signInSuccess(token));
+      })
+      .catch((error) => {
+        // Handle Errors here.
+        var errorCode = error.code;
+        var errorMessage = error.message;
+        // The email of the user's account used.
+        var email = error.email;
+        // The firebase.auth.AuthCredential type that was used.
+        var credential = error.credential;
+        // ...
+
+        console.log(error, errorCode, errorMessage, email, credential);
+        dispatch(endApiCall());
+        dispatch(signInError(error.message));
+      });
+  } catch (err) {
+    console.log(err);
+  }
 };
 
 // Anonymous sign in method
