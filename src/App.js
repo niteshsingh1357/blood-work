@@ -3,7 +3,7 @@ import SignIn from './pages/SignIn';
 import SignUp from './pages/SignUp';
 import Home from './pages/Home';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './styles/auth.css';
+import './styles/index';
 import { Switch, Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Loader from './components/Loader';
@@ -14,14 +14,16 @@ const App = ({ auth }) => {
 
   return (
     <Switch>
-      <Route
+      {/* <Route
         exact
         path='/'
         // component={Home}
-        render={() => 
+        render={() =>
           !auth.isLoaded ? <Loader /> : !auth.isEmpty ? <Home /> : <SignIn />
         }
-      />
+      /> */}
+      <Route exact path='/' component={Home} />
+
       <Route exact path='/signIn' component={SignIn} />
       <Route exact path='/signUp' component={SignUp} />
     </Switch>
