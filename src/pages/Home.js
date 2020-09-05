@@ -22,7 +22,7 @@ const Home = ({ dispatch }) => {
   return (
     <div>
       <Navbar dispatch={dispatch} signOut={signOut} />
-      <Sidebar />
+      {/* <Sidebar /> */}
     </div>
   );
 };
