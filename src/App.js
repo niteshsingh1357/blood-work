@@ -4,17 +4,39 @@ import SignUp from './pages/SignUp';
 import Home from './pages/Home';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './styles/index';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect, HashRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import Loader from './components/Loader';
+import LayoutComponent from './components/Layout';
+import { auth } from 'firebase';
+import { handleSignOut } from './redux/actions/auth';
+import './styles/theme.scss';
+import 'font-awesome/css/font-awesome.min.css';
 
-const App = ({ auth }) => {
+const PrivateRoute = ({ dispatch, auth, component, ...rest }) => {
+  if (!auth.isEmpty) {
+    dispatch(handleSignOut());
+    return <Redirect to='/signIn' />;
+  } else {
+    return (
+      // eslint-disable-line
+      <Route
+        {...rest}
+        render={(props) => React.createElement(component, props)}
+      />
+    );
+  }
+};
+
+const App = ({ auth, dispatch }) => {
   // const { token } = useContext(firebaseAuth);
   // console.log('token', token);
 
   return (
-    <Switch>
-      {/* <Route
+    <div>
+      {/* <HashRouter> */}
+      <Switch>
+        {/* <Route
         exact
         path='/'
         // component={Home}
@@ -22,11 +44,19 @@ const App = ({ auth }) => {
           !auth.isLoaded ? <Loader /> : !auth.isEmpty ? <Home /> : <SignIn />
         }
       /> */}
-      <Route exact path='/' component={Home} />
+        {/* <Route exact path='/' render={() => <Redirect to='/' />} /> */}
+        <PrivateRoute
+          path=''
+          dispatch={dispatch}
+          auth={auth}
+          component={LayoutComponent}
+        />
 
-      <Route exact path='/signIn' component={SignIn} />
-      <Route exact path='/signUp' component={SignUp} />
-    </Switch>
+        <Route exact path='/signIn' component={SignIn} />
+        <Route exact path='/signUp' component={SignUp} />
+      </Switch>
+      {/* </HashRouter> */}
+    </div>
   );
 };
 

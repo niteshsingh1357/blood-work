@@ -4,7 +4,7 @@ import { handleSignOut } from '../redux/actions/auth';
 import firebase from 'firebase';
 import { Container, Row, Col } from 'react-bootstrap';
 import Navbar from '../components/Navbar';
-import Sidebar from '../components/Sidebar';
+import Sidebar from '../components/sidebar/Sidebar';
 
 const Home = ({ dispatch }) => {
   const signOut = () => {
@@ -22,7 +22,7 @@ const Home = ({ dispatch }) => {
   return (
     <div>
       <Navbar dispatch={dispatch} signOut={signOut} />
-      {/* <Sidebar /> */}
+      <Sidebar />
     </div>
   );
 };
