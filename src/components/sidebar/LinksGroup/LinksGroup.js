@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import cx from 'classnames';
 import PropTypes from 'prop-types';
 import { NavLink, Route } from 'react-router-dom';
-import { Collapse } from 'react-bootstrap';
+import { Collapse } from 'reactstrap';
 // import { Route } from 'react-router';
 
 // import Icon from '../../Icon/Icon';
@@ -10,19 +10,10 @@ import { Collapse } from 'react-bootstrap';
 import s from './LinksGroup.module.scss';
 
 function LinksGroup(props) {
-  // constructor(props) {
-  //   super(props);
-
-  //   this.state = {
-  //     isOpen: false,
-  //   };
-  // }
-
-  // render() {
   const { className, childrenLinks, headerLink, header } = props;
-  console.log(props);
-  // const { isOpen } = this.state;
-  
+  // console.log(props);
+  const [isOpen, setOpen] = React.useState(false);
+
   if (!childrenLinks) {
     return (
       <li className={cx(s.headerLink, className)}>
@@ -47,10 +38,10 @@ function LinksGroup(props) {
                 [s.headerLinkActive]:
                   !!match && match.url.indexOf(headerLink) !== -1,
               })}
-              onClick={() => this.setState({ isOpen: !isOpen })}
+              onClick={() => setOpen(!isOpen)}
             >
               <div>
-                {glyph && <Icon glyph={glyph} />}
+                {/* {glyph && <Icon glyph={glyph} />} */}
                 <span>{header}</span>
               </div>
               <b
@@ -60,7 +51,7 @@ function LinksGroup(props) {
               />
             </a>
             {/* eslint-enable */}
-            <Collapse className={s.panel} isOpen={true}>
+            <Collapse className={s.panel} isOpen={isOpen}>
               <ul>
                 {childrenLinks &&
                   childrenLinks.map((child) => (
@@ -68,11 +59,7 @@ function LinksGroup(props) {
                       <NavLink
                         to={child.link}
                         exact
-                        onClick={() =>
-                          this.setState({
-                            isOpen: true,
-                          })
-                        }
+                        // onClick={() => setOpen(false)}
                         activeClassName={s.headerLinkActive}
                       >
                         {child.name}

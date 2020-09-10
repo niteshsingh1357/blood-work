@@ -2,7 +2,7 @@ import React from 'react';
 import Spinner from './Spinner';
 import * as Yup from 'yup';
 import { Formik } from 'formik';
-
+// import '../styles/auth.css';
 import { Button, Form } from 'react-bootstrap';
 
 // Form validation with Yup
@@ -20,7 +20,7 @@ const ValidatedAuthForm = ({ apiCallInProgress, handleSubmit, name }) => (
     validationSchema={validationSchema}
     onSubmit={(values, { setSubmitting }) => {
       console.log('values', values);
-      setSubmitting(false);
+      setSubmitting(true);
       handleSubmit(values);
     }}
   >
@@ -65,7 +65,7 @@ const ValidatedAuthForm = ({ apiCallInProgress, handleSubmit, name }) => (
             onBlur={handleBlur}
             className={errors.password && touched.password && 'error'}
           />
-          <Form.Text id='passwordHelpBlock' muted>
+          <Form.Text id='passwordHelpBlock' >
             Must have atleast 8 characters and a number
           </Form.Text>
           {errors.password && touched.password && (

@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   SIGNUP_SUCCESS,
   SIGNUP_ERROR,
@@ -10,6 +11,8 @@ import {
 } from './actionTypes';
 
 import firebase from '../../firebase/firebaseIndex';
+
+import { Redirect } from 'react-router-dom';
 
 // initialize firebase auth
 const auth = firebase.auth();
@@ -88,14 +91,17 @@ export const handleSignUp = (email, password) => async (dispatch) => {
 };
 
 export const handleSignIn = (email, password) => async (dispatch) => {
-  console.log('handleSignUpAction', email, password);
+  console.log('handleSignInAction', email, password);
   dispatch(beginApiCall());
   return auth
     .signInWithEmailAndPassword(email, password)
     .then(async (res) => {
       const token = await Object.entries(res.user)[5][1].b.g;
       dispatch(signInSuccess(token));
+      localStorage.setItem('token', token);
+      // <Redirect to='/app' />;
     })
+    .then(() => {return <Redirect to='/app' />})
     .catch((error) => {
       dispatch(endApiCall());
       dispatch(signInError(error.message));
@@ -111,7 +117,9 @@ export const handleSignOut = () => async (dispatch) => {
       .then(() => {
         dispatch(endApiCall());
         dispatch(signOutSuccess());
+        localStorage.setItem('token', null);
       })
+    .then(() => {return <Redirect to='/' />})
       .catch((error) => {
         dispatch(endApiCall());
         dispatch(signOutError(error.message));

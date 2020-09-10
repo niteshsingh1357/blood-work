@@ -8,17 +8,31 @@ import LinksGroup from './LinksGroup/LinksGroup';
 const Sidebar = ({ sidebarOpen }) => {
   // console.log(sidebarOpen);
   return (
-    <nav className={s.root}>
+    <nav className={sidebarOpen ? s.root : s.toggled}>
       <header className={s.logo}>
         <Link to='/'>
           <img src={require('../../images/logo.jpg')} alt='logo' />
         </Link>
       </header>
       <ul className={s.nav}>
-        <LinksGroup header='Dashboard' headerLink='/dashboard' />
-        <LinksGroup header='Donors' headerLink='/donors' />
-        <LinksGroup header='Requests' headerLink='/requests' />
-        <LinksGroup header='Users' headerLink='/users' />
+        <LinksGroup header='Dashboard' headerLink='/app/dashboard' />
+        <LinksGroup header='Home' headerLink='/app/home' />
+        <LinksGroup header='Donors' headerLink='/app/donors' />
+        <LinksGroup
+          header='Requests'
+          headerLink='/app/requests'
+          childrenLinks={[
+            {
+              name: 'Open Requests',
+              link: '/app/requests/open',
+            },
+            {
+              name: 'Closed Requests',
+              link: '/app/requests/close',
+            },
+          ]}
+        />
+        <LinksGroup header='Users' headerLink='/app/users' />
       </ul>
     </nav>
   );

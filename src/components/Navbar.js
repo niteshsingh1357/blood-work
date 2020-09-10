@@ -16,15 +16,15 @@ import { NavLink } from 'react-router-dom';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUserCircle, fas } from '@fortawesome/free-solid-svg-icons';
+import { fas, faBell } from '@fortawesome/free-solid-svg-icons';
 import s from '../styles/Nav.module.scss';
 import cx from 'classnames';
 import { handleSignOut } from '../redux/actions/auth';
 // import { fas } from '@fortawesome/free-brands-svg-icons';
 
-library.add(fas, faUserCircle);
+library.add(fas, faBell);
 
-const NavbarComponent = ({ dispatch, sidebarToggle }) => {
+const NavbarComponent = ({ signOut, sidebarToggle }) => {
   const [isOpen, setToggle] = useState(false);
 
   const toggleDropdown = () => {
@@ -55,6 +55,17 @@ const NavbarComponent = ({ dispatch, sidebarToggle }) => {
         </NavItem>
       </Nav>
       <Nav className='ml-auto'>
+        {/* <NavItem className={cx('', s.headerIcon)}>
+          <Button>
+            <i className='fa fa-bell fa-2x text-muted' />
+            <span>13</span>
+          </Button>
+        </NavItem>
+        <NavItem className={cx('', s.headerIcon)}>
+          <Button>
+            <i className='fa fa-cog fa-2x text-muted' />
+          </Button>
+        </NavItem> */}
         <Dropdown isOpen={isOpen} toggle={toggleDropdown}>
           <DropdownToggle nav>
             {/* <img
@@ -71,9 +82,11 @@ const NavbarComponent = ({ dispatch, sidebarToggle }) => {
           </DropdownToggle>
           <DropdownMenu style={{ width: '100%' }}>
             <DropdownItem>
-              <NavLink to='/profile'>Profile</NavLink>
+              <NavLink to='/app/profile'>Profile</NavLink>
             </DropdownItem>
-            <DropdownItem onClick={() => {}}>Sign Out</DropdownItem>
+            <DropdownItem onClick={signOut}>
+              Sign Out
+            </DropdownItem>
           </DropdownMenu>
         </Dropdown>
       </Nav>

@@ -11,6 +11,8 @@ import {
   handleAnonymousSignIn,
 } from '../redux/actions/auth';
 
+import '../styles/auth.css';
+
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserSecret } from '@fortawesome/free-solid-svg-icons';
@@ -32,7 +34,11 @@ const SignIn = ({ isLoaded, token, error, apiCallInProgress, dispatch }) => {
   return (
     <Container>
       {/* <div id='progressBarContainer'></div> */}
-      <Jumbotron className='col-md-8 col-lg-6 col-sm-8 col-xs-10 offset-4 mx-auto jumbotron'>
+      <Jumbotron
+        className={
+          'col-md-8 col-lg-6 col-sm-8 col-xs-10 offset-4 mx-auto jumbotron'
+        }
+      >
         <Row className='justify-content-md-center'>
           <Col>
             <h2 className='text-center'>Sign In</h2>
@@ -69,10 +75,7 @@ const SignIn = ({ isLoaded, token, error, apiCallInProgress, dispatch }) => {
             <b>Sign In with</b>
           </div>
           <Row className='social justify-content-center text-center'>
-            <OverlayTrigger
-              placement='top'
-              overlay={<Tooltip>Google</Tooltip>}
-            >
+            <OverlayTrigger placement='top' overlay={<Tooltip>Google</Tooltip>}>
               <Col
                 background='red'
                 className='col-md-3 col-lg-3 col-sm-10 mx-1 my-1 text-center login-social btn btn-light google'

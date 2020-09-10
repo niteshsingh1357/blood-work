@@ -2,35 +2,42 @@
 
 .headerLink {
   a {
-    margin-left: 15px;
+    // margin-left: 0px;
     display: flex;
     color: $gray-500;
     align-items: center;
     text-decoration: none;
     cursor: pointer;
-    font-weight: $font-weight-bold;
-
-    &:hover,
-    &:active,
-    &:focus {
-      font-weight: $font-weight-semi-bold;
-    }
   }
+
   a:hover {
     text-decoration: none;
     font-weight: $font-weight-semi-bold;
-    color: $gray-500;
+    color: $gray-700;
+    // background-color: $body-bg;
+  }
+
+  a:active,:focus {
+    font-weight: $font-weight-semi-bold;
+    color: $gray-700;
+    // background-color: $body-bg;
   }
 
   > a {
     position: relative;
-    padding: 0 15px;
-    line-height: 55px;
+    padding: 0 24px;
+    line-height: 45px;
     justify-content: space-between;
 
     &:hover {
-      font-weight: $font-weight-thin;
-      background-color: $gray-100;
+      font-weight: $font-weight-bold;
+      background-color: $body-bg;
+    }
+    a:active {
+      text-decoration: none;
+      font-weight: $font-weight-semi-bold;
+      // color: $gray-500;
+      color: $brand-danger;
     }
 
     img {
@@ -41,7 +48,7 @@
 }
 
 span {
-  font-weight: 300;
+  font-weight: 400;
   text-decoration: none;
 }
 
@@ -67,7 +74,8 @@ span {
   box-shadow: none;
   margin: 0;
   border-radius: 0;
-  background: rgba(#000, 0.1);
+  // margin: 0 10px;
+  background: rgba(#d50000, 0.1);
 
   div {
     padding: 0;
@@ -83,7 +91,7 @@ span {
     }
 
     a {
-      padding: 4px 20px 4px 44px;
+      padding: 4px 20px 4px 24px;
 
       &:hover,
       &:active,

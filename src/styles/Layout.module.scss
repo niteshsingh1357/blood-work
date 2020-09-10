@@ -10,7 +10,7 @@
   left: 0;
   right: 0;
   transition: left 0.3s ease-in-out, right 0.3s ease-in-out;
-  background-color: $body-bg;
+  // background-color: $body-bg;
 
   @include media-breakpoint-up(md) {
     left: $sidebar-width-open;
@@ -36,5 +36,5 @@
   min-height: 100%;
   padding: #{$navbar-height + $content-padding-vertical} $content-padding-horizontal
     ($content-padding-vertical + 20px);
-  background-color: $body-bg;
+  // background-color: $body-bg;
 }

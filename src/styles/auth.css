@@ -1,19 +1,31 @@
+/* body { */
+  /* background-color: white !important; */
+/* } */ 
+
 .jumbotron {
-  background: #ffebee;
-  margin-top: 30px;
+  background: #ffebee !important;
+  margin-top: 40px;
 }
 
 .error {
   border-color: #d50000;
 }
 
+.form-control{
+  color: black !important;
+}
+
 .input-feedback {
   color: #d50000;
 }
 
+#passwordHelpBlock {
+  color: rgba(0, 0, 0, 0.5) !important;
+}
+
 .login {
   background: #d50000;
-  border: none;
+  border: none !important;
   box-shadow: 1px 2px 3px #d50000b0;
 }
 
@@ -43,21 +55,21 @@
 }
 
 .login-social {
-  border-width: 0;
+  border-width: 0 !important;
   box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.6);
   padding: 5px;
 }
 
 .google {
-  background: #db4437;
+  background: #db4437 !important;
 }
 
 .facebook {
-  background: #3b5998;
+  background: #3b5998 !important;
 }
 
 .anonymous {
-  background: black;
+  background: black !important;
 }
 
 .google:hover {
